@@ -1,10 +1,27 @@
-[gd_scene load_steps=2 format=3 uid="uid://dxdtqp780ny6y"]
+[gd_scene load_steps=3 format=3 uid="uid://dxdtqp780ny6y"]
 
 [ext_resource type="PackedScene" uid="uid://cw7tg88xpvmjy" path="res://Scenes/Characters/character.tscn" id="1_u5lxp"]
+[ext_resource type="Script" path="res://Scenes/turn_manager.gd" id="2_q6m5u"]
 
 [node name="BattleScene" type="Node2D"]
+
+[node name="TurnManager" type="Node" parent="." node_paths=PackedStringArray("characters")]
+script = ExtResource("2_q6m5u")
+characters = [NodePath("../Character1"), NodePath("../Character2")]
+
+[node name="TurnLabel" type="Label" parent="TurnManager"]
+offset_left = -81.0
+offset_top = -142.0
+offset_right = -36.0
+offset_bottom = -119.0
+text = "Turn: "
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.5, 1.5)
 
-[node name="Character" parent="." instance=ExtResource("1_u5lxp")]
+[node name="Character1" parent="." instance=ExtResource("1_u5lxp")]
+position = Vector2(-227, -100)
+is_player = true
+
+[node name="Character2" parent="." instance=ExtResource("1_u5lxp")]
+position = Vector2(261, -102)
