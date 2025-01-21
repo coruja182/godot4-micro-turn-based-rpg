@@ -5,17 +5,46 @@ var _current_health : int = 25
 
 @export var max_health : int = 25
 @export var is_player : bool
+@export var visual : Texture2D
+@export var flip_visual : bool = false
 
 @onready var _health_bar: ProgressBar = $HealthBar
 @onready var _health_bar_label: Label = $HealthBar/Label
+@onready var _turn_manager: TurnManager = $"../TurnManager"
+@onready var _sprite: Sprite2D = $Sprite
 
 
 func _ready() -> void:
+	_sprite.texture = visual
+	_sprite.flip_h = flip_visual
+
 	_current_health = max_health
 	_update_heatlh_bar()
+	assert(_turn_manager)
+	_turn_manager.character_begin_turn.connect(on_character_begin_turn)
+	_turn_manager.character_end_turn.connect(on_character_end_turn)
+
+
+func take_damage(pAmount: int) -> void:
+	_current_health = clamp(_current_health - pAmount, 0, max_health)
+	_update_heatlh_bar()
+	
+	if (_current_health <= 0):
+		_turn_manager.character_died(self)
+		queue_free()
 
 
 func _update_heatlh_bar() -> void:
 	_health_bar.max_value = max_health
 	_health_bar.value = (float(_current_health) / float(max_health)) * 100
 	_health_bar_label.text = "%s / %s" % [_current_health, max_health]
+
+
+func on_character_begin_turn(pCharacter: Character) -> void:
+	print("on_character_begin_turn", pCharacter.name)
+	pass
+
+
+func on_character_end_turn(pCharacter: Character) -> void:
+	print("on_character_end_turn", pCharacter.name)
+	pass

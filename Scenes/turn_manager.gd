@@ -9,6 +9,9 @@ class_name TurnManager extends Node
 var _current_character : Character
 var game_over : bool = false
 
+signal character_begin_turn(character: Character)
+signal character_end_turn(character: Character)
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -24,10 +27,11 @@ func begin_next_turn() -> void:
 	
 	_current_character = characters[next_character_index]
 	update_debug()
+	emit_signal("character_begin_turn", _current_character)
 
 
 func end_current_turn() -> void:
-	
+	emit_signal("character_end_turn", _current_character)
 	await get_tree().create_timer(next_turn_delay_secs).timeout
 	
 	if not game_over:
