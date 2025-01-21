@@ -24,6 +24,7 @@ func _ready() -> void:
 	assert(_turn_manager)
 	_turn_manager.character_begin_turn.connect(on_character_begin_turn)
 	_turn_manager.character_end_turn.connect(on_character_end_turn)
+	print("Character ", name, " connected to turn manager signals")
 
 
 func take_damage(pAmount: int) -> void:
@@ -43,9 +44,11 @@ func _update_heatlh_bar() -> void:
 
 func on_character_begin_turn(pCharacter: Character) -> void:
 	print("on_character_begin_turn", pCharacter.name)
-	pass
 
 
 func on_character_end_turn(pCharacter: Character) -> void:
 	print("on_character_end_turn", pCharacter.name)
-	pass
+
+
+func cast_combat_action(pAction: CombatAction) -> void:
+	print("cast_combat_action", pAction)

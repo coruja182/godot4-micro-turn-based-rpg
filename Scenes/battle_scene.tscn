@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dxdtqp780ny6y"]
+[gd_scene load_steps=11 format=3 uid="uid://dxdtqp780ny6y"]
 
 [ext_resource type="PackedScene" uid="uid://cw7tg88xpvmjy" path="res://Scenes/Characters/character.tscn" id="1_u5lxp"]
 [ext_resource type="Script" path="res://Scenes/turn_manager.gd" id="2_q6m5u"]
@@ -8,12 +8,57 @@
 [ext_resource type="Resource" uid="uid://wpki7pmeu2rd" path="res://CombatActions/slash.tres" id="5_h2s8c"]
 [ext_resource type="Resource" uid="uid://j0bx5whc25dv" path="res://CombatActions/heal.tres" id="6_ghxtq"]
 [ext_resource type="Resource" uid="uid://bhfaj2ffautqa" path="res://CombatActions/stomp.tres" id="7_wj17m"]
+[ext_resource type="Script" path="res://combat_action_button.gd" id="9_igtpr"]
+[ext_resource type="Script" path="res://player_ui.gd" id="9_wtqf6"]
 
 [node name="BattleScene" type="Node2D"]
 
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
+
+[node name="Player" parent="." instance=ExtResource("1_u5lxp")]
+position = Vector2(-254, -116)
+is_player = true
+visual = ExtResource("3_bqm1l")
+combat_actions = Array[ExtResource("4_1j56p")]([ExtResource("5_h2s8c"), ExtResource("6_ghxtq"), ExtResource("7_wj17m")])
+
+[node name="Reptile" parent="." instance=ExtResource("1_u5lxp")]
+position = Vector2(261, -116)
+visual = ExtResource("4_7s0k7")
+flip_visual = true
+combat_actions = Array[ExtResource("4_1j56p")]([ExtResource("5_h2s8c")])
+
+[node name="PlayerCombatActionsUI" type="VBoxContainer" parent="." node_paths=PackedStringArray("buttons")]
+offset_left = -341.0
+offset_top = 37.0
+offset_right = -163.0
+offset_bottom = 173.0
+script = ExtResource("9_wtqf6")
+buttons = [NodePath("CombatActionButton"), NodePath("CombatActionButton2"), NodePath("CombatActionButton3"), NodePath("CombatActionButton4")]
+
+[node name="CombatActionButton" type="Button" parent="PlayerCombatActionsUI"]
+layout_mode = 2
+text = "Action (1 DMG)"
+script = ExtResource("9_igtpr")
+
+[node name="CombatActionButton2" type="Button" parent="PlayerCombatActionsUI"]
+layout_mode = 2
+text = "Action (1 DMG)"
+script = ExtResource("9_igtpr")
+
+[node name="CombatActionButton3" type="Button" parent="PlayerCombatActionsUI"]
+layout_mode = 2
+text = "Action (1 DMG)"
+script = ExtResource("9_igtpr")
+
+[node name="CombatActionButton4" type="Button" parent="PlayerCombatActionsUI"]
+layout_mode = 2
+text = "Action (1 DMG)"
+script = ExtResource("9_igtpr")
+
 [node name="TurnManager" type="Node" parent="." node_paths=PackedStringArray("characters")]
 script = ExtResource("2_q6m5u")
-characters = [NodePath("../Hero"), NodePath("../Reptile")]
+characters = [NodePath("../Player"), NodePath("../Reptile")]
 
 [node name="TurnLabel" type="Label" parent="TurnManager"]
 offset_left = -81.0
@@ -22,17 +67,7 @@ offset_right = -36.0
 offset_bottom = -119.0
 text = "Turn: "
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.5, 1.5)
-
-[node name="Hero" parent="." instance=ExtResource("1_u5lxp")]
-position = Vector2(-227, -100)
-is_player = true
-visual = ExtResource("3_bqm1l")
-combat_actions = Array[ExtResource("4_1j56p")]([ExtResource("5_h2s8c"), ExtResource("6_ghxtq"), ExtResource("7_wj17m")])
-
-[node name="Reptile" parent="." instance=ExtResource("1_u5lxp")]
-position = Vector2(261, -102)
-visual = ExtResource("4_7s0k7")
-flip_visual = true
-combat_actions = Array[ExtResource("4_1j56p")]([ExtResource("5_h2s8c")])
+[connection signal="pressed" from="PlayerCombatActionsUI/CombatActionButton" to="PlayerCombatActionsUI/CombatActionButton" method="_on_pressed"]
+[connection signal="pressed" from="PlayerCombatActionsUI/CombatActionButton2" to="PlayerCombatActionsUI/CombatActionButton2" method="_on_pressed"]
+[connection signal="pressed" from="PlayerCombatActionsUI/CombatActionButton3" to="PlayerCombatActionsUI/CombatActionButton3" method="_on_pressed"]
+[connection signal="pressed" from="PlayerCombatActionsUI/CombatActionButton4" to="PlayerCombatActionsUI/CombatActionButton4" method="_on_pressed"]

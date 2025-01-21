@@ -26,8 +26,9 @@ func begin_next_turn() -> void:
 		next_character_index = 0
 	
 	_current_character = characters[next_character_index]
-	update_debug()
+	print("Emitting signal ", character_begin_turn)
 	emit_signal("character_begin_turn", _current_character)
+	update_debug()
 
 
 func end_current_turn() -> void:
