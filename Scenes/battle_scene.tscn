@@ -1,15 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://dxdtqp780ny6y"]
+[gd_scene load_steps=9 format=3 uid="uid://dxdtqp780ny6y"]
 
 [ext_resource type="PackedScene" uid="uid://cw7tg88xpvmjy" path="res://Scenes/Characters/character.tscn" id="1_u5lxp"]
 [ext_resource type="Script" path="res://Scenes/turn_manager.gd" id="2_q6m5u"]
 [ext_resource type="Texture2D" uid="uid://dam6v1nmyommh" path="res://Sprites/Dragon.png" id="3_bqm1l"]
+[ext_resource type="Script" path="res://combat_action.gd" id="4_1j56p"]
 [ext_resource type="Texture2D" uid="uid://wijs85qeg7am" path="res://Sprites/Reptile.png" id="4_7s0k7"]
+[ext_resource type="Resource" uid="uid://wpki7pmeu2rd" path="res://CombatActions/slash.tres" id="5_h2s8c"]
+[ext_resource type="Resource" uid="uid://j0bx5whc25dv" path="res://CombatActions/heal.tres" id="6_ghxtq"]
+[ext_resource type="Resource" uid="uid://bhfaj2ffautqa" path="res://CombatActions/stomp.tres" id="7_wj17m"]
 
 [node name="BattleScene" type="Node2D"]
 
 [node name="TurnManager" type="Node" parent="." node_paths=PackedStringArray("characters")]
 script = ExtResource("2_q6m5u")
-characters = [NodePath("../Character1"), NodePath("../Reptile")]
+characters = [NodePath("../Hero"), NodePath("../Reptile")]
 
 [node name="TurnLabel" type="Label" parent="TurnManager"]
 offset_left = -81.0
@@ -21,12 +25,14 @@ text = "Turn: "
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.5, 1.5)
 
-[node name="Character1" parent="." instance=ExtResource("1_u5lxp")]
+[node name="Hero" parent="." instance=ExtResource("1_u5lxp")]
 position = Vector2(-227, -100)
 is_player = true
 visual = ExtResource("3_bqm1l")
+combat_actions = Array[ExtResource("4_1j56p")]([ExtResource("5_h2s8c"), ExtResource("6_ghxtq"), ExtResource("7_wj17m")])
 
 [node name="Reptile" parent="." instance=ExtResource("1_u5lxp")]
 position = Vector2(261, -102)
 visual = ExtResource("4_7s0k7")
 flip_visual = true
+combat_actions = Array[ExtResource("4_1j56p")]([ExtResource("5_h2s8c")])

@@ -7,6 +7,7 @@ var _current_health : int = 25
 @export var is_player : bool
 @export var visual : Texture2D
 @export var flip_visual : bool = false
+@export var combat_actions : Array[CombatAction]
 
 @onready var _health_bar: ProgressBar = $HealthBar
 @onready var _health_bar_label: Label = $HealthBar/Label
