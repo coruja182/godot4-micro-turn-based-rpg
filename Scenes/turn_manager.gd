@@ -15,8 +15,14 @@ signal character_end_turn(character: Character)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	assert(len(characters) >= 2, 'must have at least 2 characters')
+	assert(len(characters) == 2, 'must init with 2 characters')
+	set_characters_opponents(characters)
 	begin_next_turn()
+
+
+func set_characters_opponents(p_characters : Array[Character]) -> void:
+	p_characters[0].opponent = p_characters[1]
+	p_characters[1].opponent = p_characters[0]
 
 
 func begin_next_turn() -> void:
