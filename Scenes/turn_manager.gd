@@ -32,9 +32,7 @@ func begin_next_turn() -> void:
 		next_character_index = 0
 	
 	_current_character = characters[next_character_index]
-	print("Emitting signal ", character_begin_turn)
 	emit_signal("character_begin_turn", _current_character)
-	update_debug()
 
 
 func end_current_turn() -> void:
@@ -52,7 +50,3 @@ func character_died(character: Character):
 		print("Game Over!")
 	else:
 		print("You Win!")
-
-
-func update_debug() -> void:
-	turn_label.text = "Turn of %s"  % _current_character.name

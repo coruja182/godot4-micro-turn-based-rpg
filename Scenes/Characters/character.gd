@@ -25,7 +25,6 @@ func _ready() -> void:
 	_update_health_bar()
 	assert(_turn_manager)
 	_turn_manager.character_begin_turn.connect(on_character_begin_turn)
-	_turn_manager.character_end_turn.connect(on_character_end_turn)
 	print("Character ", name, " connected to turn manager signals")
 
 
@@ -50,15 +49,30 @@ func _update_health_bar() -> void:
 	_health_bar_label.text = "%s / %s" % [_current_health, max_health]
 
 
-func on_character_begin_turn(pCharacter: Character) -> void:
-	print("on_character_begin_turn", pCharacter.name)
+func on_character_begin_turn(p_character: Character) -> void:
+	print_debug("on_character_begin_turn ", p_character.name)
+	if p_character == self and not p_character.is_player:
+		_decide_combat_action()
 
 
-func on_character_end_turn(pCharacter: Character) -> void:
-	print("on_character_end_turn", pCharacter.name)
+func _decide_combat_action() -> void:
+	print_debug(name, " _decide_combat_action")
+	var health_percent : float = float(_current_health) / float(max_health)
+	
+	for i_combat_action in combat_actions:
+		if i_combat_action.heal > 0:
+			if randf() > health_percent:
+				cast_combat_action(i_combat_action)
+				return
+			else:
+				continue
+			
+		cast_combat_action(i_combat_action)
+		return
 
 
 func cast_combat_action(p_action: CombatAction) -> void:	
+	print_debug("cast_combat_action ", p_action)
 	if p_action.damage > 0:
 		opponent.take_damage(p_action.damage)
 	elif p_action.heal > 0:

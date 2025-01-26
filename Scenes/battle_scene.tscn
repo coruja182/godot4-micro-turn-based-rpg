@@ -26,7 +26,7 @@ combat_actions = Array[ExtResource("4_1j56p")]([ExtResource("5_h2s8c"), ExtResou
 position = Vector2(261, -116)
 visual = ExtResource("4_7s0k7")
 flip_visual = true
-combat_actions = Array[ExtResource("4_1j56p")]([ExtResource("5_h2s8c")])
+combat_actions = Array[ExtResource("4_1j56p")]([ExtResource("6_ghxtq"), ExtResource("5_h2s8c")])
 
 [node name="PlayerCombatActionsUI" type="VBoxContainer" parent="." node_paths=PackedStringArray("buttons")]
 offset_left = -341.0
@@ -59,13 +59,6 @@ script = ExtResource("9_igtpr")
 [node name="TurnManager" type="Node" parent="." node_paths=PackedStringArray("characters")]
 script = ExtResource("2_q6m5u")
 characters = [NodePath("../Player"), NodePath("../Reptile")]
-
-[node name="TurnLabel" type="Label" parent="TurnManager"]
-offset_left = -81.0
-offset_top = -142.0
-offset_right = -36.0
-offset_bottom = -119.0
-text = "Turn: "
 
 [connection signal="pressed" from="PlayerCombatActionsUI/CombatActionButton" to="PlayerCombatActionsUI/CombatActionButton" method="_on_pressed"]
 [connection signal="pressed" from="PlayerCombatActionsUI/CombatActionButton2" to="PlayerCombatActionsUI/CombatActionButton2" method="_on_pressed"]
